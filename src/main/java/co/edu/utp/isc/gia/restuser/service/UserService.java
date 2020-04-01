@@ -5,6 +5,7 @@
  */
 package co.edu.utp.isc.gia.restuser.service;
 
+import co.edu.utp.isc.gia.restuser.web.dto.Consecutivo;
 import co.edu.utp.isc.gia.restuser.web.dto.UserDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class UserService {
     
     
     public UserDto save(UserDto user){
-        user.setId(users.size() +1L);
+        user.setId(Consecutivo.asignarId((ArrayList<UserDto>) users));
         user.setUsername(user.getUsername().toLowerCase());
         users.add(user);
         return user;
@@ -32,6 +33,40 @@ public class UserService {
     }
     
     public UserDto findOne(Long id){
-        return users.get(id.intValue() + 1);
+        for(UserDto u: users){
+            if(u.getId().equals(id)){
+                return u;
+            }   
+        }
+        return null;
+     }
+    
+    public UserDto editOne(Long id, UserDto user){
+        
+        UserDto usuario =findOne(id);
+        
+            if (usuario==null){
+                return null;
+            }else{
+            user.setId(id);
+            users.set(users.indexOf(usuario), user);
+            return findOne(id);
+                }
+               
     }
+    
+    public UserDto removeOne(Long id){
+    
+        UserDto usuario=findOne(id);
+        if (usuario==null){
+                return null;
+            }else{
+            
+            users.remove(users.indexOf(usuario));
+            return usuario;
+                }
+        
+    }
+    
+    
 }
