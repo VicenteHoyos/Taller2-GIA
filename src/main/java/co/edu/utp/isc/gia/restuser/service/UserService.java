@@ -5,6 +5,7 @@
  */
 package co.edu.utp.isc.gia.restuser.service;
 
+import co.edu.utp.isc.gia.restuser.data.repository.UserRepository;
 import co.edu.utp.isc.gia.restuser.web.dto.Consecutivo;
 import co.edu.utp.isc.gia.restuser.web.dto.UserDto;
 import java.util.ArrayList;
@@ -19,13 +20,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     private List<UserDto> users= new ArrayList();
+    private ModelMapper modelMapper;
+    private UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        this.modelMapper =modelMapper;
+    }
     
-    
-    public UserDto save(UserDto user){
-        user.setId(Consecutivo.asignarId((ArrayList<UserDto>) users));
-        user.setUsername(user.getUsername().toLowerCase());
-        users.add(user);
-        return user;
+    public UserDto save(UserDto user){        
+        UserModel myUser = new UserModel(
+                null,
+                user.getUsername().toLowerCase();
+                user.getPassword();
+                user.getId;
+                user.getName;
+                user.getEmail;
+                        
+        myUser = userRepository.dave(myUser);
+            UserDto resp = UserDto.builder()
+                              .id(myUser.getId())
+                              .username(myUser.getUsername())
+                              .email
+                              .build());
+                                
+                                
+                        
+        );
+        return resp;
+        //user.setId(Consecutivo.asignarId((ArrayList<UserDto>) users));
+        //user.setUsername(user.getUsername().toLowerCase());
+        //users.add(user);
+        //return user;
     }
     
     public List<UserDto> listAll(){

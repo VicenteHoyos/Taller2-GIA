@@ -6,12 +6,16 @@
 package co.edu.utp.isc.gia.restuser.web.dto;
 
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Vicente
  */
-
+@NoArgsConstructor @AllArgsConstructor
+@Builder
 public class UserDto  implements Serializable{
     
     private Long id;
