@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.http.ResponseEntity;
 /**
  *
  * @author NICOLAS
@@ -39,11 +39,17 @@ public class UserController {
     }
     
     
-   /* @GetMapping()
-    public List<UserDto> getAll(){
-        return userService.listAll();
+    @GetMapping()
+    public ResponseEntity<?> getAll(){
+        List<UserDto> lista = userService.getAll();
+        
+        if(lista == null || lista.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        
+        return ResponseEntity.ok(lista);
     }
-    
+    /*
     @GetMapping("/{id}")
     public UserDto getOne(@PathVariable("id") Long id){
         return userService.findOne(id);

@@ -40,5 +40,19 @@ public class UserService {
         //user.setUsername(user.getUsername().toLowerCase());
         //users.add(user);
         //return user;
-    }   
+    }
+    
+    public List<UserDto> getAll() {
+        List<UserModel> lista = (List<UserModel>) userRepository.findAll();
+        List<UserDto> respuesta = new ArrayList<>();
+        
+        if(lista == null || lista.isEmpty()){
+            return null;
+        }
+        
+        for(UserModel usuario : lista){
+            respuesta.add(modelMapper.map(usuario, UserDto.class));
+        }
+        return respuesta;
+    }
 }
