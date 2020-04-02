@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import co.edu.utp.isc.gia.restuser.data.entity.UserModel;
 
 /**
  *
@@ -26,79 +25,20 @@ public class UserService {
     private ModelMapper modelMapper;
     private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
-        this.modelMapper =modelMapper;
+        this.modelMapper = modelMapper;
     }
     
-    public UserDto save(UserDto user){        
-        UserModel myUser = new UserModel(
-                null,
-                user.getUsername().toLowerCase();
-                user.getPassword();
-                user.getId;
-                user.getName;
-                user.getEmail;
-                        
-        myUser = userRepository.dave(myUser);
-            UserDto resp = UserDto.builder()
-                              .id(myUser.getId())
-                              .username(myUser.getUsername())
-                              .email
-                              .build());
-                                
-                                
-                        
-        );
+    public UserDto save(UserDto user){
+        UserModel myUser = modelMapper.map(user, UserModel.class);
+        myUser  = userRepository.save(myUser);
+        UserDto resp = modelMapper.map(myUser, UserDto.class);
+
         return resp;
         //user.setId(Consecutivo.asignarId((ArrayList<UserDto>) users));
         //user.setUsername(user.getUsername().toLowerCase());
         //users.add(user);
         //return user;
-    }
-    
-    public List<UserDto> listAll(){
-        return null;
-            //return users;
-    }
-    
-    public UserDto findOne(Long id){
-        return null;
-        /*for(UserDto u: users){
-            if(u.getId().equals(id)){
-                return u;
-            }   
-        }
-        return null;*/
-     }
-    
-    public UserDto editOne(Long id, UserDto user){
-        return null;
-       /*
-        UserDto usuario =findOne(id);
-        
-            if (usuario==null){
-                return null;
-            }else{
-            user.setId(id);
-            users.set(users.indexOf(usuario), user);
-            return findOne(id);
-                }*/
-               
-    }
-    
-    public UserDto removeOne(Long id){
-        return null;
-        /*UserDto usuario=findOne(id);
-        if (usuario==null){
-                return null;
-            }else{
-            
-            users.remove(users.indexOf(usuario));
-            return usuario;
-                }*/
-        
-    }
-    
-    
+    }   
 }

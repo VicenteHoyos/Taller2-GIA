@@ -39,7 +39,7 @@ public class UserController {
     }
     
     
-    @GetMapping()
+   /* @GetMapping()
     public List<UserDto> getAll(){
         return userService.listAll();
     }
@@ -58,6 +58,6 @@ public class UserController {
     public UserDto removeOne(@PathVariable("id") Long id){
         return userService.removeOne(id);
     
-    }
+    }*/
     
 }
