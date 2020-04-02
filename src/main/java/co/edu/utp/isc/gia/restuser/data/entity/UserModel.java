@@ -15,15 +15,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.io.Serializable;
 
 /**
  *
- * @author NICOLAS
+ * @author Vicente
  */
 @AllArgsConstructor @NoArgsConstructor
 @Setter @Getter
 @Entity
-public class UserModel {
+public class UserModel implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
