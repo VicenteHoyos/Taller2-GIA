@@ -40,8 +40,8 @@ public class UserController {
     
     
     @GetMapping()
-    public ResponseEntity<?> getAll(){
-        List<UserDto> lista = userService.getAll();
+    public ResponseEntity<?> listAll(){
+        List<UserDto> lista = userService.listAll();
         
         if(lista == null || lista.isEmpty()){
             return ResponseEntity.noContent().build();
@@ -49,21 +49,47 @@ public class UserController {
         
         return ResponseEntity.ok(lista);
     }
+    
+     @GetMapping("/{id}")
+    public ResponseEntity<?> getOne(@PathVariable("id") Long id){
+        
+        UserDto user = userService.findOne(id);
+        
+        if(user == null){
+            return ResponseEntity.notFound().build();
+        }
+        
+        return ResponseEntity.ok(user);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+        
+        UserDto user = userService.findOne(id);
+        
+        if(user == null){
+            return ResponseEntity.ok(false);
+        }
+        
+        userService.delete(user.getId());
+        return ResponseEntity.ok(true);
+    }
     /*
-    @GetMapping("/{id}")
-    public UserDto getOne(@PathVariable("id") Long id){
-        return userService.findOne(id);
-    }
-    
-    @PutMapping("update/{id}")
-    public UserDto updateOne(@PathVariable("id") Long id, @RequestBody UserDto user){
-        return userService.editOne(id,user);
-    }
-    
-    @DeleteMapping("delete/{id}")
-    public UserDto removeOne(@PathVariable("id") Long id){
-        return userService.removeOne(id);
-    
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@RequestBody UserDto user){
+        
+        UserDto consulta = userService.findOne(user.getId());
+        
+        if(consulta == null){
+            return ResponseEntity.notFound().build();
+        }
+        consulta = userService.save(user);
+        
+        if(consulta == null){
+            
+            return ResponseEntity.badRequest().build();
+        }
+        
+        return ResponseEntity.ok(consulta);
     }*/
     
 }

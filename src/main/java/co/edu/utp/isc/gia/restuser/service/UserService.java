@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 /**
  *
@@ -42,7 +43,7 @@ public class UserService {
         //return user;
     }
     
-    public List<UserDto> getAll() {
+    public List<UserDto> listAll() {
         List<UserModel> lista = (List<UserModel>) userRepository.findAll();
         List<UserDto> respuesta = new ArrayList<>();
         
@@ -55,4 +56,26 @@ public class UserService {
         }
         return respuesta;
     }
+    
+    public UserDto findOne(Long id) {
+        Optional<UserModel> user = userRepository.findById(id);
+        
+        if(user.isPresent()){
+            return modelMapper.map(user, UserDto.class);
+        }
+        
+        return null;
+    }
+    
+    public boolean delete(Long id) {
+        Optional<UserModel> user = userRepository.findById(id);
+        
+        if(user == null){
+            return false;
+        }
+        
+        return true;
+    }
+    
+   
 }
